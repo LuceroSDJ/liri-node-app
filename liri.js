@@ -235,6 +235,8 @@ function songQuestion() {
       }
     });
 
+//Work in progress
+//must be able to console log the command and the name of the song & read random.txt 
 function readText() {
   fs.readFile("random.txt", "utf8", function(err, data) {
     if(err) {
@@ -245,23 +247,4 @@ function readText() {
     console.log(data);
   })
 }
-
-// ========================================================
-// ==== I need to send requests using the axios package ===
-//grab axios package & store it into a variable:
-//var axios = require('axios');
-///////////////////////+
-/*
-//example from documentation:
-axios.get('/user', {
-    params: {
-      ID: 12345
-    }
-  })
-  .then(function (response) {
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-  }); */
 }
