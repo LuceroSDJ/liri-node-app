@@ -55,6 +55,8 @@ function commandLiri() {
 commandLiri();
 
 var axios = require('axios');
+ //require moment.js
+ var moment = require('moment');
 
  // Store all of the arguments in an array
  var userArgs = process.argv;
@@ -69,13 +71,8 @@ var axios = require('axios');
         userArgs += userArgs[i];
     }
   }
-
-
   // ===================================
   //send requests to Bands in Town API using the axios package 
-  //function concertRequest() {
-    //console.log('hello');
-  //}
   function concertRequest() {
     inquirer
     .prompt([
@@ -91,14 +88,19 @@ var axios = require('axios');
   if(concertInfo.userRequest) {
     var bandsInTownArtistEvents = "https://rest.bandsintown.com/artists/" + concertInfo.userRequest + "/events?app_id=codingbootcamp";
     axios
-      .get(bandsInTownArtistEvents)
-      .then(function(response){
-        console.log(response.data);
+    .get(bandsInTownArtistEvents)
+    .then(function(response){
+      //create variable to add Date of the Event (use moment to format this as "MM/DD/YYYY")
+        var concertDate = response.data[0].venue.datetime;
+        var dateFormat = "MM/DD/YYYY";
+        var convertedDate = moment(concertDate, dateFormat);
+        //console.log(response.data);
         console.log('NAME OF THE VENUE: ' + response.data[0].venue.name);
         console.log('VENUE LOCATION: ' + response.data[0].venue.city);
         console.log('VENUE LOCATION: ' + response.data[0].venue.country);
         console.log('TODAY\'S DATE: ' + response.headers.date)
-        console.log('CONCERT\'S DATE: ' + response.data[0].venue.datetime)
+        //console.log('CONCERT\'S DATE: ' + response.data[0].venue.datetime)
+        console.log('CONCERT\'S DATE: ' + moment(concertDate).format("MM/DD/YY"))
       })
       .catch(function (error) {
         console.log(error);
@@ -108,18 +110,8 @@ var axios = require('axios');
     }
   });
 };
- // ===================================
-  //send requests to OMDB API using the axios package 
-  //output the following information to your terminal/bash window:
-  //* Title of the movie.
-  //* Year the movie came out.
-  //* IMDB Rating of the movie.
-  //* Rotten Tomatoes Rating of the movie.
-  //* Country where the movie was produced.
-  //* Language of the movie.
-  //* Plot of the movie.
-  //* Actors in the movie.
-
+ // ===============================================
+//send requests to OMDB API using the axios package 
 function movieRequest() {
   inquirer
   .prompt([
@@ -138,8 +130,9 @@ function movieRequest() {
     axios
       .get(OMDBapi)
       .then(function(response) {
-        console.log(response.data);
+        //console.log(response.data);
         /*
+        output the following information to your terminal/bash window:
         * Title of the movie.
         * Year the movie came out.
         * IMDB Rating of the movie.
@@ -165,7 +158,7 @@ function movieRequest() {
       axios
         .get(OMDBapi)
         .then(function(response) {
-          console.log(response.data);
+          //console.log(response.data);
           console.log('Title of the movie: ' + response.data.Title);
           console.log('Year: ' + response.data.Year);
           console.log('IMDB Rating: ' + response.data.Ratings[0].Value);
@@ -241,7 +234,7 @@ function songQuestion() {
         })
       }
     });
-    
+
 function readText() {
   fs.readFile("random.txt", "utf8", function(err, data) {
     if(err) {
@@ -256,7 +249,7 @@ function readText() {
 // ========================================================
 // ==== I need to send requests using the axios package ===
 //grab axios package & store it into a variable:
-//                                  var axios = require('axios');
+//var axios = require('axios');
 ///////////////////////+
 /*
 //example from documentation:
