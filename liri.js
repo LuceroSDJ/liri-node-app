@@ -11,7 +11,6 @@ var keys = require('./keys.js');  //our keys are available due to MODULARIZATION
 //run node! I should see my keys in the console
 // ==== it works as expected when I run node :) =====
 
-
 //======================================================
 //===== create code to take user's input ======
 //liri.js must take in one of the following commands:
@@ -46,7 +45,7 @@ function commandLiri() {
           movieRequest();
           break;
         case 'do-what-it-says':
-          readText();
+          randomCommand();
           break;
       }
     })
@@ -92,15 +91,15 @@ var axios = require('axios');
     .then(function(response){
       //create variable to add Date of the Event (use moment to format this as "MM/DD/YYYY")
         var concertDate = response.data[0].venue.datetime;
-        var dateFormat = "MM/DD/YYYY";
-        var convertedDate = moment(concertDate, dateFormat);
-        //console.log(response.data);
-        console.log('NAME OF THE VENUE: ' + response.data[0].venue.name);
-        console.log('VENUE LOCATION: ' + response.data[0].venue.city);
-        console.log('VENUE LOCATION: ' + response.data[0].venue.country);
-        console.log('TODAY\'S DATE: ' + response.headers.date)
-        //console.log('CONCERT\'S DATE: ' + response.data[0].venue.datetime)
-        console.log('CONCERT\'S DATE: ' + moment(concertDate).format("MM/DD/YY"))
+        //template literals
+        var showConcertInfo = `
+        NAME OF THE VENUE: ${response.data[0].venue.name}
+        VENUE LOCATION: ${response.data[0].venue.city}
+        VENUE LOCATION: ${response.data[0].venue.country}
+        TODAY\'S DATE: ${response.headers.date}
+        CONCERT\'S DATE: ${moment(concertDate).format("MM/DD/YY")}
+        `;
+        console.log(showConcertInfo);
       })
       .catch(function (error) {
         console.log(error);
@@ -124,7 +123,6 @@ function movieRequest() {
     if(concertInfo.userRequest) {
     //If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
     //add if/else statement. If left empty default to given movie
-    //if(concertInfo.userRequest) {}
     //construct urlQuery
     var OMDBapi = 'https://www.omdbapi.com/?t=' + concertInfo.userRequest + '&apikey=trilogy';
     axios
@@ -141,14 +139,17 @@ function movieRequest() {
         * Language of the movie.
         * Plot of the movie.
         * Actors in the movie. */
-        console.log('Title of the movie: ' + response.data.Title);
-        console.log('Year: ' + response.data.Year);
-        console.log('IMDB Rating: ' + response.data.Ratings[0].Value);
-        console.log('Rotten Tomatoes Raiting: ' + response.data.Ratings[1].Value);
-        console.log('Country: ' + response.data.Country);
-        console.log('Language: ' + response.data.Language);
-        console.log('Plot: ' + response.data.Plot);
-        console.log('Actors: ' + response.data.Actors);
+        var showMovieInfo = `
+        Title of the movie: ${response.data.Title}
+        Year: ${response.data.Year}
+        IMDB Rating: ${response.data.Ratings[0].Value}
+        Rotten Tomatoes Raiting: ${response.data.Ratings[1].Value}
+        Country: ${response.data.Country}
+        Language: ${response.data.Language}
+        Plot: ${response.data.Plot}
+        Actors: ${response.data.Actors}
+        `
+        console.log(showMovieInfo);
       })
       .catch(function (error) {
         console.log(error);
@@ -158,15 +159,17 @@ function movieRequest() {
       axios
         .get(OMDBapi)
         .then(function(response) {
-          //console.log(response.data);
-          console.log('Title of the movie: ' + response.data.Title);
-          console.log('Year: ' + response.data.Year);
-          console.log('IMDB Rating: ' + response.data.Ratings[0].Value);
-          console.log('Rotten Tomatoes Raiting: ' + response.data.Ratings[1].Value);
-          console.log('Country: ' + response.data.Country);
-          console.log('Language: ' + response.data.Language);
-          console.log('Plot: ' + response.data.Plot);
-          console.log('Actors: ' + response.data.Actors);
+          var showDefaultMovie = `
+          Title of the movie: ${response.data.Title}
+          Year: ${response.data.Year}
+          IMDB Rating: ${response.data.Ratings[0].Value}
+          Rotten Tomatoes Raiting: ${response.data.Ratings[1].Value}
+          Country: ${response.data.Country}
+          Language: ${response.data.Language}
+          Plot: ${response.data.Plot}
+          Actors: ${response.data.Actors}
+          `
+          console.log(showDefaultMovie);
         })
         .catch(function (error) {
           console.log(error);
@@ -177,13 +180,11 @@ function movieRequest() {
 
 //===============================
 //===== spotify-this-song =======
-
 var Spotify = require('node-spotify-api');  //here we required the package and stored it into a variable
 
-//==now, keys information can be accessed with the following line:
+//==now, keys information can be accessed with the following line: ==
 var spotify = new Spotify(keys.spotify);  // "new" calls in a regular function so "function Spotify()" must be a CONSTRUCTOR FUNCTION
 //console.log(spotify);
-
 
 function songQuestion() {
   inquirer
@@ -213,10 +214,13 @@ function songQuestion() {
           //console.log(response.tracks.href.items.artists.external_urls.name);
           //console.log(response.tracks.items.album.external_urls.spotify);
           //console.log(response);
-          console.log('ARTIST/BAND: ' + response.tracks.items[0].artists[0].name);
-          console.log('SONG\'S NAME: ' + response.tracks.items[0].name);
-          console.log('ALBUM: ' + response.tracks.items[0].album.name);
-          console.log('LINK: ' + response.tracks.items[0].external_urls.spotify);
+          var showSongInfo = `
+          ARTIST/BAND: ${response.tracks.items[0].artists[0].name}
+          SONG\'S NAME: ${response.tracks.items[0].name}
+          ALBUM: ${response.tracks.items[0].album.name}
+          LINK: ${response.tracks.items[0].external_urls.spotify}
+          `
+          console.log(showSongInfo);
         })
         .catch(function(err) {
           console.log(err);
@@ -227,24 +231,47 @@ function songQuestion() {
         query: 'The Sign', 
         limit: 1 
         }).then(function(response) {
-          console.log('ARTIST/BAND: ' + response.tracks.items[0].artists[0].name);
-          console.log('SONG\'S NAME: ' + response.tracks.items[0].name);
-          console.log('ALBUM: ' + response.tracks.items[0].album.name);
-          console.log('LINK: ' + response.tracks.items[0].external_urls.spotify);
+          var showDefaultSong = `
+          ARTIST/BAND: ${response.tracks.items[0].artists[0].name}
+          SONG\'S NAME: ${response.tracks.items[0].name}
+          ALBUM: ${response.tracks.items[0].album.name}
+          LINK: ${response.tracks.items[0].external_urls.spotify}
+          `
+          console.log(showDefaultSong);
         })
       }
-    });
+    })
+  }
+//Console log the command and the name of the song & read random.txt 
+var fs = require("fs");
 
-//Work in progress
-//must be able to console log the command and the name of the song & read random.txt 
-function readText() {
+function randomCommand() {
   fs.readFile("random.txt", "utf8", function(err, data) {
     if(err) {
       return console.log(err);
     }
-    console.log(data);
     var data = data.split(",");
-    console.log(data);
-  })
-}
-}
+    var commandArg = data[0];
+    var songArg = data[1];
+    console.log(data[0]);
+    console.log(data[1]);
+    //console.log(data);
+    //make search request to spotify API by reading var songArg
+    spotify.search({
+      type: 'track', 
+      query: songArg, 
+      limit: 1 
+      }).then(function(response) {
+        var readSongFile = `
+          ARTIST/BAND: ${response.tracks.items[0].artists[0].name}
+          SONG\'S NAME: ${response.tracks.items[0].name}
+          ALBUM: ${response.tracks.items[0].album.name}
+          LINK: ${response.tracks.items[0].external_urls.spotify}
+          `
+          console.log(readSongFile);
+        })
+        .catch(function(err) {
+          console.log(err);
+        })
+    })
+  }
