@@ -82,7 +82,7 @@ Liri.js can take in one of the following commands which will be provided as a li
    
 ### Image: API response data displayed in the terminal
 ![lirifunctionality](https://user-images.githubusercontent.com/44692872/53691015-53cfc180-3d3b-11e9-8a4a-556228e27432.png)
-![dowhatitsays](https://user-images.githubusercontent.com/44692872/53757315-fb0a4100-3e80-11e9-95fc-4229e6617a35.png)
+![dowhatitsays](https://user-images.githubusercontent.com/44692872/53757816-483ae280-3e82-11e9-9baa-58ea01b1baaa.png)
 
   
    
