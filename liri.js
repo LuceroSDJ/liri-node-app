@@ -267,7 +267,7 @@ function randomCommand() {
           SONG\'S NAME: ${response.tracks.items[0].name}
           ALBUM: ${response.tracks.items[0].album.name}
           LINK: ${response.tracks.items[0].external_urls.spotify}
-          `
+          `                               
           console.log(readSongFile);
         })
         .catch(function(err) {
