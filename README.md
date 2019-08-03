@@ -12,17 +12,18 @@ LIRI will search Spotify for songs, Bands in Town for concerts, and OMDB for mov
 * JavaScript
 * node.js
 
-### APIs
-* [Bands In Town API](http://www.artists.bandsintown.com/bandsintown-api)
-* [Node-Spotify-API](https://www.npmjs.com/package/node-spotify-api)
-* [OMDB API](http://www.omdbapi.com)
-
-### MODULES
+### NODE.JS NPM MODULES
+* fs built-in-module
 * axios
 * dotenv
 * inquirer
 * node-spotify-api
 * moment 
+
+### APIs (Application Programming Interfaces)
+* [Bands In Town API](http://www.artists.bandsintown.com/bandsintown-api)
+* [Node-Spotify-API](https://www.npmjs.com/package/node-spotify-api)
+* [OMDB API](http://www.omdbapi.com)
 
 ### USER COMMANDS
 Liri.js can take in one of the following commands which will be provided as a list from where user can choose from:
@@ -45,7 +46,7 @@ Liri.js can take in one of the following commands which will be provided as a li
        * Today's Date
        * Date of the Event (use moment to format this as "MM/DD/YYYY")
      ```
-  * If no song is provided then your program will default to "The Sign" by Ace of Base.
+  * If no event is provided then your program will default to "The Sign" by Ace of Base.
   * [Demo Video](https://drive.google.com/file/d/1rc5ge1I7WDO-IIzjc67BziwauUD7LC11/view)
 
 2. `node liri.js spotify-this-song`
@@ -53,7 +54,7 @@ Liri.js can take in one of the following commands which will be provided as a li
   * Based on user's input, liri.js will make a call to Node-Spotify-API and render the following information about each song to the terminal: 
      ```
        * Artist(s)
-       * The song's name
+       * Song's name
        * A preview link of the song from Spotify
        * The album that the song is from
      ```
